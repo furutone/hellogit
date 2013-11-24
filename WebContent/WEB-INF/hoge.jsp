@@ -18,6 +18,7 @@
 
 </head>
 <body>
+<p>ppp </p>
 	<%=new java.util.Date()%>
 	<script>
 		//文字列を JSON に変換
@@ -101,15 +102,19 @@
 			} ]
 		} ];
 		$(function() {
-
-			$.ajax({
-				type : 'GET',
-				url : 'http://localhost:8080/wtpweb/getEmployeeJson',
-				dataType : 'json',
-				success : function(json) {
+			$("p").click(function () {
+				console.log("clicked ppp");
+				$.ajax({
+					async: false,
+					type : 'POST',
+					url : 'http://localhost:8080/wtpweb/getEmpJson',
+					dataType : 'json',
+				}).always(function( json ) {
 					console.log("EmployeeJson = " + json);
-				}
+					console.log("stringfy" + JSON.stringify(json) );
+				});		
 			});
+
 
 			$("#tree3")
 					.dynatree(
