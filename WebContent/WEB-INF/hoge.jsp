@@ -23,103 +23,156 @@
 		//文字列を JSON に変換
 		var obj = JSON.parse('{"Name":"Yamada","Age":10}');
 
+		//Servletからjson取得.
+		var obj = JSON.parse('{"Name":"Yamada","Age":10}');
+
 		//コンソールに内容を出力
 		console.log("Name = " + obj.Name); //Name = Yamada
 		console.log("Age = " + obj.Age); //Age = 10
 	</script>
 
-<script>
-var treeData = [
-                {title: "item1 with key and tooltip", tooltip: "Look, a tool tip!" },
-                {title: "item2: selected on init", select: true },
-                {title: "Folder", isFolder: true, key: "id3",expand: true,
-                  children: [
-                    {title: "Sub-item 3.1",
-                   	key: "id3.1",
-                   	isFolder: true,
-                      expand: true,
-                      children: [
-                        {title: "Sub-item 3.1.1", key: "id3.1.1", select: true },
-                        {title: "Sub-item 3.1.2", key: "id3.1.2" },
-                        
-                      ],
-                    },
-                    {title: "Sub-item 3.2",
-                      children: [
-                        {title: "Sub-item 3.2.1", key: "id3.2.1" },
-                        {title: "Sub-item 3.2.2", key: "id3.2.2" }
-                      ]
-                    }
-                  ]
-                },
-                {title: "Document with some children (expanded on init)", key: "id4", expand: true,
-                  children: [
-                    {title: "Sub-item 4.1 (active on init)", activate: true,
-                      children: [
-                        {title: "Sub-item 4.1.1", key: "id4.1.1" },
-                        {title: "Sub-item 4.1.2", key: "id4.1.2" }
-                      ]
-                    },
-                    {title: "Sub-item 4.2 (selected on init)", select: true,
-                      children: [
-                        {title: "Sub-item 4.2.1", key: "id4.2.1" },
-                        {title: "Sub-item 4.2.2", key: "id4.2.2" }
-                      ]
-                    },
-                    {title: "Sub-item 4.3 (hideCheckbox)", hideCheckbox: true },
-                    {title: "Sub-item 4.4 (unselectable)", unselectable: true }
-                  ]
-                }
-              ];
-$(function(){
+	<script>
+		var treeData = [ {
+			title : "item1 with key and tooltip",
+			tooltip : "Look, a tool tip!"
+		}, {
+			title : "item2: selected on init",
+			select : true
+		}, {
+			title : "Folder",
+			isFolder : true,
+			key : "id3",
+			expand : true,
+			children : [ {
+				title : "Sub-item 3.1",
+				key : "id3.1",
+				isFolder : true,
+				expand : true,
+				children : [ {
+					title : "Sub-item 3.1.1",
+					key : "id3.1.1",
+					select : true
+				}, {
+					title : "Sub-item 3.1.2",
+					key : "id3.1.2"
+				},
 
-   $("#tree3").dynatree({
-      checkbox: true,
-      selectMode: 3,
-      children: treeData,
-      onSelect: function(select, node) {
-        // Get a list of all selected nodes, and convert to a key array:
-        var selKeys = $.map(node.tree.getSelectedNodes(), function(node){
-          return node.data.key;
-        });
-        $("#echoSelection3").text(selKeys.join(", "));
+				],
+			}, {
+				title : "Sub-item 3.2",
+				children : [ {
+					title : "Sub-item 3.2.1",
+					key : "id3.2.1"
+				}, {
+					title : "Sub-item 3.2.2",
+					key : "id3.2.2"
+				} ]
+			} ]
+		}, {
+			title : "Document with some children (expanded on init)",
+			key : "id4",
+			expand : true,
+			children : [ {
+				title : "Sub-item 4.1 (active on init)",
+				activate : true,
+				children : [ {
+					title : "Sub-item 4.1.1",
+					key : "id4.1.1"
+				}, {
+					title : "Sub-item 4.1.2",
+					key : "id4.1.2"
+				} ]
+			}, {
+				title : "Sub-item 4.2 (selected on init)",
+				select : true,
+				children : [ {
+					title : "Sub-item 4.2.1",
+					key : "id4.2.1"
+				}, {
+					title : "Sub-item 4.2.2",
+					key : "id4.2.2"
+				} ]
+			}, {
+				title : "Sub-item 4.3 (hideCheckbox)",
+				hideCheckbox : true
+			}, {
+				title : "Sub-item 4.4 (unselectable)",
+				unselectable : true
+			} ]
+		} ];
+		$(function() {
 
-        // Get a list of all selected TOP nodes
-        var selRootNodes = node.tree.getSelectedNodes(true);
-        // ... and convert to a key array:
-        var selRootKeys = $.map(selRootNodes, function(node){
-          return node.data.key;
-        });
-        $("#echoSelectionRootKeys3").text(selRootKeys.join(", "));
-        $("#echoSelectionRoots3").text(selRootNodes.join(", "));
-      },
-      onDblClick: function(node, event) {
-        node.toggleSelect();
-      },
-      onKeydown: function(node, event) {
-        if( event.which == 32 ) {
-          node.toggleSelect();
-          return false;
-        }
-      },
-      // The following options are only required, if we have more than one tree on one page:
-//        initId: "treeData",
-      cookieId: "dynatree-Cb3",
-      idPrefix: "dynatree-Cb3-"
-    });
-});    
-</script>
-  <!-- Tree #3 -->
+			$.ajax({
+				type : 'GET',
+				url : 'http://localhost:8080/wtpweb/getEmployeeJson',
+				dataType : 'json',
+				success : function(json) {
+					console.log("EmployeeJson = " + json);
+				}
+			});
 
-  <p class="description">
-    This tree has <b>checkoxes and selectMode 3 (hierarchical multi-selection)</b> enabled.<br>
-    A double-click handler selects the node.<br>
-    A keydown handler selects on [space].
-  </p>
-  <div id="tree3"></div>
-  <div>Selected keys: <span id="echoSelection3">-</span></div>
-  <div>Selected root keys: <span id="echoSelectionRootKeys3">-</span></div>
-  <div>Selected root nodes: <span id="echoSelectionRoots3">-</span></div>
+			$("#tree3")
+					.dynatree(
+							{
+								checkbox : true,
+								selectMode : 3,
+								children : treeData,
+								onSelect : function(select, node) {
+									// Get a list of all selected nodes, and convert to a key array:
+									var selKeys = $.map(node.tree
+											.getSelectedNodes(),
+											function(node) {
+												return node.data.key;
+											});
+									$("#echoSelection3").text(
+											selKeys.join(", "));
+
+									// Get a list of all selected TOP nodes
+									var selRootNodes = node.tree
+											.getSelectedNodes(true);
+									// ... and convert to a key array:
+									var selRootKeys = $.map(selRootNodes,
+											function(node) {
+												return node.data.key;
+											});
+									$("#echoSelectionRootKeys3").text(
+											selRootKeys.join(", "));
+									$("#echoSelectionRoots3").text(
+											selRootNodes.join(", "));
+								},
+								onDblClick : function(node, event) {
+									node.toggleSelect();
+								},
+								onKeydown : function(node, event) {
+									if (event.which == 32) {
+										node.toggleSelect();
+										return false;
+									}
+								},
+								// The following options are only required, if we have more than one tree on one page:
+								//        initId: "treeData",
+								cookieId : "dynatree-Cb3",
+								idPrefix : "dynatree-Cb3-"
+							});
+		});
+	</script>
+	<!-- Tree #3 -->
+
+	<p class="description">
+		This tree has <b>checkoxes and selectMode 3 (hierarchical
+			multi-selection)</b> enabled.<br> A double-click handler selects the
+		node.<br> A keydown handler selects on [space].
+	</p>
+	<div id="tree3"></div>
+	<div>
+		Selected keys: <span id="echoSelection3">-</span>
+	</div>
+	<div>
+		Selected root keys: <span id="echoSelectionRootKeys3">-</span>
+	</div>
+	<div>
+		Selected root nodes: <span id="echoSelectionRoots3">-</span>
+	</div>
 
 
 

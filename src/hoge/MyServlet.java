@@ -19,27 +19,27 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "mysrv", urlPatterns = "/mysrv")
 public class MyServlet extends HttpServlet {
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher red = null;
-		resp.setContentType("text/html;charset=UTF-8");
 
-		req.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
 
-		String m = (String) req.getParameter("m");
+		String m = (String) request.getParameter("m");
 		System.out.println(m);
-		resp.getWriter().println("Hello");
+		response.getWriter().println("Hello");
 
 		// JSP‚Ö
-		red = req.getRequestDispatcher("\\WEB-INF\\hoge.jsp");
-		red.forward(req, resp);
+		red = request.getRequestDispatcher("\\WEB-INF\\hoge.jsp");
+		red.forward(request, response);
 
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		doGet(req, resp);
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 }
