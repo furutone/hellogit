@@ -38,23 +38,29 @@ public class getDynaTreeDataServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO: dynaTreeを格納できるBeanを用意する.
 		// http://d.hatena.ne.jp/momijiame/20120125/1327503353
-
+		// TODO: GSON ServerSide . How to response JSON
+		// http://stackoverflow.com/questions/1900711/handling-servlet-output-in-ajax/1900796#1900796
 		// TODO:安全なJSONの使い方を調べる　webセキュリティの小部屋.
+		// TODO: ヘッダー
+		//http://hmkcode.com/java-servlet-send-receive-json-using-jquery-ajax/
 		response.setContentType("application/json; charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
-		request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 
 		ObjectMapper mapper = new ObjectMapper();
 
 		/**
 		 * How to use Jackson to deserialise an array of objects.
-		 * http://stackoverflow.com/questions/6349421/how-to-use-jackson-to-deserialise-an-array-of-objects
+		 * http://stackoverflow
+		 * .com/questions/6349421/how-to-use-jackson-to-deserialise
+		 * -an-array-of-objects
 		 */
 		// final String json =
 		// "[{\"title\" : \"Sub-item 3.1.1\",\"key\" : \"id3.1.1\",\"select\" : true,\"children\" : [ {\"title\" : \"Sub-item 4.1.1\",\"key\" : \"id4.1.1\"}]}]";
 		// final String json =
 		// "[{\"title\" : \"item1 with key and tooltip\", \"tooltip\" : \"Look, a tool tip!\"}, {\"title\" : \"item2: selected on init\",\"select\" : true}]";
-		final String json = "[{\"title\" : \"Sub-item 3.1.1\",\"key\" : \"id3.1.1\",\"select\" : true,\"children\" : [ {\"title\" : \"Sub-item 4.1.1\",\"key\" : \"id4.1.1\"}]},{\"title\" : \"item1 with key and tooltip\", \"tooltip\" : \"Look, a tool tip!\"}, {\"title\" : \"item2: selected on init\",\"select\" : true}]";
+		final String json = "[{\"title\" : \"サブアイテム 3.1.1\",\"key\" : \"id3.1.1\",\"select\" : true,\"children\" : [ {\"title\" : \"Sub-item 4.1.1\",\"key\" : \"id4.1.1\"}]},{\"title\" : \"item1 with key and tooltip\", \"tooltip\" : \"Look, a tool tip!\"}, {\"title\" : \"item2: selected on init\",\"select\" : true}]";
 		System.out.println(json);
 		List<DynaTreeData> jsonList = mapper.readValue(json,
 				new TypeReference<List<DynaTreeData>>() {
@@ -62,7 +68,9 @@ public class getDynaTreeDataServlet extends HttpServlet {
 		// DynaTreeData[] jsonList = mapper.readValue(json,
 		// DynaTreeData[].class);
 
-		response.getOutputStream().write(mapper.writeValueAsBytes(jsonList));
+		// TODO: choose one
+		// response.getOutputStream().write(mapper.writeValueAsBytes(jsonList));
+		mapper.writeValue(response.getOutputStream(), jsonList);
 
 	}
 }

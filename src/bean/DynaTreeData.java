@@ -5,6 +5,16 @@ import java.util.List;
 
 public class DynaTreeData implements Serializable {
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "{[ \"title\" : " + title + ", \"key\"=" + key + ", \"select\" :"
+				+ select + ", \"tooltip\" :" + tooltip + ", \"children\" :" + children
+				+ "]}";
+	}
+
 	private String title;
 	private String key;
 	private String select;
