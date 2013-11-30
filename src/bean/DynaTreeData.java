@@ -3,18 +3,11 @@ package bean;
 import java.io.Serializable;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class DynaTreeData implements Serializable {
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "{[ \"title\" : " + title + ", \"key\"=" + key + ", \"select\" :"
-				+ select + ", \"tooltip\" :" + tooltip + ", \"children\" :" + children
-				+ "]}";
-	}
-
+	//TODO: @JsonProperty http://hmkcode.com/jackson-java-json/
 	private String title;
 	private String key;
 	private String select;
