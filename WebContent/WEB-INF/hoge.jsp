@@ -18,110 +18,53 @@
 
 </head>
 <body>
-<p>ppp </p>
+	<p>ppp</p>
 	<%=new java.util.Date()%>
 	<script>
 		//文字列を JSON に変換
 		var obj = JSON.parse('{"Name":"Yamada","Age":10}');
-
-		//Servletからjson取得.
-		var obj = JSON.parse('{"Name":"Yamada","Age":10}');
-
 		//コンソールに内容を出力
 		console.log("Name = " + obj.Name); //Name = Yamada
 		console.log("Age = " + obj.Age); //Age = 10
-	</script>
 
-	<script>
-		var treeData = [ {
-			title : "item1 with key and tooltip",
-			tooltip : "Look, a tool tip!"
-		}, {
-			title : "item2: selected on init",
-			select : true
-		}, {
-			title : "Folder",
-			isFolder : true,
-			key : "id3",
-			expand : true,
-			children : [ {
-				title : "Sub-item 3.1",
-				key : "id3.1",
-				isFolder : true,
-				expand : true,
-				children : [ {
-					title : "Sub-item 3.1.1",
-					key : "id3.1.1",
-					select : true
-				}, {
-					title : "Sub-item 3.1.2",
-					key : "id3.1.2"
-				},
-
-				],
-			}, {
-				title : "Sub-item 3.2",
-				children : [ {
-					title : "Sub-item 3.2.1",
-					key : "id3.2.1"
-				}, {
-					title : "Sub-item 3.2.2",
-					key : "id3.2.2"
-				} ]
-			} ]
-		}, {
-			title : "Document with some children (expanded on init)",
-			key : "id4",
-			expand : true,
-			children : [ {
-				title : "Sub-item 4.1 (active on init)",
-				activate : true,
-				children : [ {
-					title : "Sub-item 4.1.1",
-					key : "id4.1.1"
-				}, {
-					title : "Sub-item 4.1.2",
-					key : "id4.1.2"
-				} ]
-			}, {
-				title : "Sub-item 4.2 (selected on init)",
-				select : true,
-				children : [ {
-					title : "Sub-item 4.2.1",
-					key : "id4.2.1"
-				}, {
-					title : "Sub-item 4.2.2",
-					key : "id4.2.2"
-				} ]
-			}, {
-				title : "Sub-item 4.3 (hideCheckbox)",
-				hideCheckbox : true
-			}, {
-				title : "Sub-item 4.4 (unselectable)",
-				unselectable : true
-			} ]
-		} ];
 		$(function() {
-			$("p").click(function () {
+			$("p").click(function() {
 				console.log("clicked ppp");
 				$.ajax({
-					async: false,
+					async : false,
 					type : 'POST',
 					url : 'http://localhost:8080/wtpweb/getEmpJson',
 					dataType : 'json',
-				}).always(function( json ) {
+				}).always(function(json) {
 					console.log("EmployeeJson = " + json);
-					console.log("stringfy" + JSON.stringify(json) );
-				});		
+					console.log("stringfy" + JSON.stringify(json));
+				});
 			});
-
+			function getJson() {
+				$.ajax({
+					async : false,
+					type : 'POST',
+					url : 'http://localhost:8080/wtpweb/getEmpJson',
+					dataType : 'json',
+				}).always(function(json) {
+					console.log("ServletJson = " + json);
+					console.log("stringfy" + JSON.stringify(json));
+				});
+			}
 
 			$("#tree3")
 					.dynatree(
 							{
 								checkbox : true,
 								selectMode : 3,
-								children : treeData,
+								//children : treeData,
+								initAjax : {
+									url : "getDynaTreeData",
+									data : {
+										key : "root", // Optional arguments to append to the url
+										mode : "all"
+									}
+								},
 								onSelect : function(select, node) {
 									// Get a list of all selected nodes, and convert to a key array:
 									var selKeys = $.map(node.tree

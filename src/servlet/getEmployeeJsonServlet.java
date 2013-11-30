@@ -1,4 +1,4 @@
-package hoge;
+package servlet;
 
 import java.io.IOException;
 import java.util.Map;
@@ -41,12 +41,16 @@ public class getEmployeeJsonServlet extends HttpServlet {
 
 		// JSON(オブジェクト)
 		String json = "{\"a\":1,\"b\":2}";
+		//String json2 = "[ {title : \"Sub-item 3.1.1\",key : \"id3.1.1\",select : true}, {title : \"Sub-item 3.1.2\",key : \"id3.1.2\"}";
 		// Jackson 生成。
 		Map<String, Integer> foobar = mapper.readValue(json, Map.class);
-		System.out.println("result1.toString() : " + foobar.toString());
+		//Map<String, Integer> foobar2 = mapper.readValue(json2, Map.class);
 
-		// response.getOutputStream().write(result.toString().getBytes("UTF-8"));
-		response.getOutputStream().write(json.getBytes("UTF-8"));
+		System.out.println("result1.toString() : " + foobar.toString());
+		//System.out.println("result2.toString() : " + foobar2.toString());
+
+		response.getOutputStream().write(json.toString().getBytes("UTF-8"));
+		//response.getOutputStream().write(json2.getBytes("UTF-8"));
 	}
 
 }

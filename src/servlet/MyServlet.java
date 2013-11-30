@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hoge;
+package servlet;
 
 import java.io.IOException;
 
