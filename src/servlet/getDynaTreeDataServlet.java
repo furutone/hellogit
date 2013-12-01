@@ -41,12 +41,14 @@ public class getDynaTreeDataServlet extends HttpServlet {
 		// TODO: GSON ServerSide . How to response JSON
 		// http://stackoverflow.com/questions/1900711/handling-servlet-output-in-ajax/1900796#1900796
 		// TODO:安全なJSONの使い方を調べる　webセキュリティの小部屋.
+		// http://www.websec-room.com/2013/08/03/921
 		// TODO: ヘッダー
-		//http://hmkcode.com/java-servlet-send-receive-json-using-jquery-ajax/
+		// http://hmkcode.com/java-servlet-send-receive-json-using-jquery-ajax/
 		response.setContentType("application/json; charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
+		response.addHeader("X-Content-Type-Options", "nosniff");
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -68,9 +70,10 @@ public class getDynaTreeDataServlet extends HttpServlet {
 		// DynaTreeData[] jsonList = mapper.readValue(json,
 		// DynaTreeData[].class);
 
-		// TODO: choose one
+		// TODO: How to response. choose one
 		// response.getOutputStream().write(mapper.writeValueAsBytes(jsonList));
-		mapper.writeValue(response.getOutputStream(), jsonList);
-
+		// mapper.writeValue(response.getOutputStream(), jsonList);
+		System.out.println(mapper.writeValueAsString(jsonList));
+		response.getWriter().println(mapper.writeValueAsString(jsonList));
 	}
 }

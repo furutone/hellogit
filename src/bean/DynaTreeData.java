@@ -3,14 +3,12 @@ package bean;
 import java.io.Serializable;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 public class DynaTreeData implements Serializable {
 
-	//TODO: @JsonProperty http://hmkcode.com/jackson-java-json/
+	// TODO: @JsonProperty http://hmkcode.com/jackson-java-json/
 	private String title;
 	private String key;
-	private String select;
+	private boolean select;
 	private String tooltip;
 	private List<DynaTreeData> children;
 
@@ -47,7 +45,7 @@ public class DynaTreeData implements Serializable {
 	/**
 	 * @return the select
 	 */
-	public String getSelect() {
+	public boolean isSelect() {
 		return select;
 	}
 
@@ -55,7 +53,7 @@ public class DynaTreeData implements Serializable {
 	 * @param select
 	 *            the select to set
 	 */
-	public void setSelect(String select) {
+	public void setSelect(boolean select) {
 		this.select = select;
 	}
 
